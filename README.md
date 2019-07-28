@@ -16,4 +16,5 @@ MyCoreNLPDemo contains java scripts (**src** folder) that parse multiple article
 - **sentenceComplexity.java** - the script print out the mean number of words per sentence.
 - **embeddedPPsInNPs.java** - the script uses the Tree class to parse the constituents of each sentence. Then it iterates over each node and gets the subtree whose label value is "NP". Then it iterates over all NPs and gets the subtrees whose label value is "PP". It calculates the mean number of PP modifiers per NP.
 - **embeddedClausesInNPs.java** - the script uses the Tree class to parse the constituents of each sentence. Then it iterates over each node and gets the subtree whose label value is "NP". Then it iterates over all NPs and gets the subtrees whose label value is "SBAR" (finite and non-finite clauses). It calculates the mean number of Clause modifiers per NP.
+- **hedgingMD.java** - One way of marking hedging is by means of MD (Modal Auxiliary Verbs). The script, therefore, calculates the mean number of MD per number of sentences.
   

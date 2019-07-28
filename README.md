@@ -1,0 +1,15 @@
+# MyCoreNLPDemo
+
+### Overview of the project
+MyCoreNLPDemo contains java scripts (**src** folder) that parse multiple articles in Compulational Linguistics in xml form (the files can be accessed from the **all_Ks** folder. Source: ACL Anthology Reference Corpus), and use Stanford CoreNLP annotators to output coreference analysis per document and sentiment analysis per sentence, as well as text length, sentence count, number of self mentions (1st plural personal pronouns), average number of positive/negative/neutral sentences. The **scr** folder will be dynamically and regularly expanded with new scripts. 
+
+### How to run the scripts and what the scripts do
+**1. Things to consider before you run the scripts:**
+- When you open the MycoreNLPDemo project in your editor, make sure that the subbranch called **Libraries** in not empty (i.e. it contains Stanford CoreNLP libraries that the scripts require to run the CoreNLP annotators).If the Libraries directory is empty, do the following:
+- Download Stanford CoreNLP https://stanfordnlp.github.io/CoreNLP/download.html and unarchive it.
+- Then go back to the **Libraries** subbranch, select it, and right click on it. Then select **Add JAR/Folder**, search for the corenlp package that you've already unarchived and load all libraries from the folder.
+
+**2. What the scripts do...:**
+- **SentimentAnalysis.java** - the script iterates over the files stored in the all_Ks directory, gets the first element by tagName, and the sentence count per text. Then iterates over each sentence in a text and analyses its sentiment. The positive, negative, and neutral sentiment values are stored in 3 different listArrays. Then the number of occurrences in each list is counted and divided by the number of sentences per text. The script prints out the average number of negative, positive, and neutral sentences in a document.
+- **SelfMentions.java** - the script prints out the number of selfMention occurrences (i.e. we, our, us) per text and then divides their number by the number of tokens, and outputs the average number of selfMentions in the document.
+  

@@ -11,5 +11,9 @@ MyCoreNLPDemo contains java scripts (**src** folder) that parse multiple article
 
 **2. What the scripts do...:**
 - **SentimentAnalysis.java** - the script iterates over the files stored in the all_Ks directory, gets the first element by tagName, and the sentence count per text. Then iterates over each sentence in a text and analyses its sentiment. The positive, negative, and neutral sentiment values are stored in 3 different listArrays. Then the number of occurrences in each list is counted and divided by the number of sentences per text. The script prints out the average number of negative, positive, and neutral sentences in a document.
-- **SelfMentions.java** - the script prints out the number of selfMention occurrences (i.e. we, our, us) per text and then divides their number by the number of tokens, and outputs the average number of selfMentions in the document.
+- **SelfMentions.java** - the script prints out the number of selfMention occurrences (i.e. we, our, us) per document and then divides their number by the number of NPs, and outputs the mean number of selfMentions in the document.
+- **countNPs.java** - the script uses the Tree class to parse the constituents of each sentence. Then it iterates over each node and gets the subtree whose label value is "NP". It prints out the mean number of NP occurrences per number of sentences.
+- **sentenceComplexity.java** - the script print out the mean number of words per sentence.
+- **embeddedPPsInNPs.java** - the script uses the Tree class to parse the constituents of each sentence. Then it iterates over each node and gets the subtree whose label value is "NP". Then it iterates over all NPs and gets the subtrees whose label value is "PP". It calculates the mean number of PP modifiers per NP.
+- **embeddedClausesInNPs.java** - the script uses the Tree class to parse the constituents of each sentence. Then it iterates over each node and gets the subtree whose label value is "NP". Then it iterates over all NPs and gets the subtrees whose label value is "SBAR" (finite and non-finite clauses). It calculates the mean number of Clause modifiers per NP.
   

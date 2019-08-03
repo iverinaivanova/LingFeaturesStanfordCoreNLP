@@ -42,7 +42,7 @@ public class hedgingMD {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_Ds/D1c_2").listFiles();
+        File[] files = new File("/all_Ks").listFiles();
         analyzeFiles(files, pipeline);
     }
 
@@ -86,7 +86,7 @@ public class hedgingMD {
             ArrayList<String> bodyTextFractions = new ArrayList<>();
             ArrayList<String> abstractTextFractions = new ArrayList<>();
             
-            System.out.println("Analyzing file: " + file.getName());
+            //System.out.println("Analyzing file: " + file.getName());
             Document doc = builder.parse(file);
             
             

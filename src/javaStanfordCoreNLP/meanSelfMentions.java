@@ -27,6 +27,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -42,43 +43,75 @@ public class meanSelfMentions {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_Ks/test").listFiles();
+        File[] files = new File("/all_Ks").listFiles();
         analyzeFiles(files, pipeline);
     }
 
     public static void analyzeFiles(File[] files, StanfordCoreNLP pipeline) throws ParserConfigurationException, SAXException, IOException {
+      /*  ABSTRACT
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         for (File file : files) {
             Document doc = builder.parse(file);
             NodeList abstractList;
             Element abstractEl = (Element) doc.getElementsByTagName("bodyText").item(0);
-            String abstracttext = abstractEl.getTextContent(); //.replaceAll("[^a-zA-Z ]", " ");
+            String abstracttext = abstractEl.getTextContent(); //.replaceAll("[^a-zA-Z ]", " ");*/
             //System.out.println("My abstract text:\n " + abstracttext);
             // annnotate the document
             // create a document object
            // abstracttext = abstracttext.replaceAll("\n", "");
+           
+           // BODY SECTION
+           DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+           DocumentBuilder builder = factory.newDocumentBuilder();        
+            for (File file : files) {
+                ArrayList<String> bodyTextFractions = new ArrayList<>();
+                ArrayList<String> abstractTextFractions = new ArrayList<>();
             
-           StringBuilder sb = new StringBuilder();
-           String[] lines = abstracttext.split("\n");
-           for(String l : lines) {
-               //System.out.println("aLine: " + l);
-               if(l.endsWith("-")) {
-                   sb.append(l.substring(0, l.length()-1));
-               }
-               else {
-                   sb.append(l+ " ");
-               }
-           }
-           abstracttext = sb.toString();
-           
-           //System.out.println(abstracttext);
-           String small = abstracttext.toLowerCase();
-           //System.out.println("Lower Case Text: " + small);
-           
-            CoreDocument document = new CoreDocument(small);
+                //System.out.println("Analyzing file: " + file.getName());
+                Document doc = builder.parse(file);
+            NodeList bodyTextElements = doc.getElementsByTagName("bodyText");
+            for (int n = 1; n < bodyTextElements.getLength(); n++) {
+                
+                Node nNode = bodyTextElements.item(n);
+                String nNodeText = nNode.getTextContent();
+                StringBuilder sb = new StringBuilder();
+                String[] lines = nNodeText.split("\n");
+                for (String l : lines) {
+                    //System.out.println("aLine: " + l);
+                    if (l.endsWith("-")) {
+                        sb.append(l.substring(0, l.length() - 1));
 
-            pipeline.annotate(document);
+                    } else {
+                        sb.append(l + " ");
+                    }
+
+                }
+                nNodeText = sb.toString();
+                if (n > 0) {
+                    bodyTextFractions.add(nNodeText);
+                }
+                if (n == 0) {
+                    abstractTextFractions.add(nNodeText);
+                }
+
+            }
+
+            
+            StringBuilder bodyTextAggregated = new StringBuilder();
+            for (String bodyTextContent : bodyTextFractions) {
+                    //System.out.println("aLine: " + l);
+                    if (bodyTextContent.endsWith("-")) {
+                        bodyTextAggregated.append(bodyTextContent.substring(0, bodyTextContent.length() - 1));
+
+                    } else {
+                        bodyTextAggregated.append(bodyTextContent + " ");
+                    }
+            }
+            String bodyTexContentCleaned = bodyTextAggregated.toString().trim();
+            //System.out.println("body text cleaned: " + bodyTexContentCleaned);
+            CoreDocument document = new CoreDocument(bodyTexContentCleaned);
+            pipeline.annotate(document);  
              List<Tree> myNPs = new ArrayList<Tree>();
             int tokensOfDoc = document.tokens().size();
             ArrayList<String> selfMent = new ArrayList<>();

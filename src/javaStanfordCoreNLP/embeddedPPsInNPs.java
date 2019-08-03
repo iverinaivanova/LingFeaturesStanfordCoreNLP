@@ -27,6 +27,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -42,11 +43,12 @@ public class embeddedPPsInNPs {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_Ks/test").listFiles();
+        File[] files = new File("/all_Ks").listFiles();
         analyzeFiles(files, pipeline);
     }
 
     public static void analyzeFiles(File[] files, StanfordCoreNLP pipeline) throws ParserConfigurationException, SAXException, IOException {
+       /* ABSTRACT
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         for (File file : files) {
@@ -78,6 +80,59 @@ public class embeddedPPsInNPs {
            
             CoreDocument document = new CoreDocument(small);
 
+            pipeline.annotate(document); */
+       // BODY SECTION
+       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();        
+        for (File file : files) {
+            ArrayList<String> bodyTextFractions = new ArrayList<>();
+            ArrayList<String> abstractTextFractions = new ArrayList<>();
+            
+            //System.out.println("Analyzing file: " + file.getName());
+            Document doc = builder.parse(file);
+            
+            
+            NodeList bodyTextElements = doc.getElementsByTagName("bodyText");
+            for (int n = 1; n < bodyTextElements.getLength(); n++) {
+                
+                Node nNode = bodyTextElements.item(n);
+                String nNodeText = nNode.getTextContent();
+                StringBuilder sb = new StringBuilder();
+                String[] lines = nNodeText.split("\n");
+                for (String l : lines) {
+                    //System.out.println("aLine: " + l);
+                    if (l.endsWith("-")) {
+                        sb.append(l.substring(0, l.length() - 1));
+
+                    } else {
+                        sb.append(l + " ");
+                    }
+
+                }
+                nNodeText = sb.toString();
+                if (n > 0) {
+                    bodyTextFractions.add(nNodeText);
+                }
+                if (n == 0) {
+                    abstractTextFractions.add(nNodeText);
+                }
+
+            }
+
+            
+            StringBuilder bodyTextAggregated = new StringBuilder();
+            for (String bodyTextContent : bodyTextFractions) {
+                    //System.out.println("aLine: " + l);
+                    if (bodyTextContent.endsWith("-")) {
+                        bodyTextAggregated.append(bodyTextContent.substring(0, bodyTextContent.length() - 1));
+
+                    } else {
+                        bodyTextAggregated.append(bodyTextContent + " ");
+                    }
+            }
+            String bodyTexContentCleaned = bodyTextAggregated.toString().trim();
+            //System.out.println("body text cleaned: " + bodyTexContentCleaned);
+            CoreDocument document = new CoreDocument(bodyTexContentCleaned);
             pipeline.annotate(document);
              List<Tree> myNPs = new ArrayList<Tree>(); 
              List<Tree> embeddedNPs = new ArrayList<Tree>(); 
@@ -120,11 +175,12 @@ public class embeddedPPsInNPs {
             int myPronounsNum = myPronouns.size();
             int withoutPronouns = countNPs - myPronounsNum;
             int embeddedPPNum = embeddedPPs.size();
-            System.out.println(myNPs);
-            System.out.println("Embedded PPs: " + embeddedPPs);
+            System.out.println("Analysing file:" + file.getName());
+            //System.out.println("All NPs: " + myNPs);
+            //System.out.println("Embedded PPs: " + embeddedPPs);
             double meanPPModifiers = (double) embeddedPPNum/withoutPronouns;
             meanPPModifiers = Math.round(meanPPModifiers*100.0)/100.0;  
-            System.out.println("Analysing file:" + file.getName());
+           
             // Printing the mean number of embedded PP as modifiers in NPs
             System.out.println(meanPPModifiers);
            

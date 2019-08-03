@@ -44,7 +44,7 @@ public class sentenceComplexity {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_Qs/Qs").listFiles();
+        File[] files = new File("/all_Ks").listFiles();
         analyzeFiles(files, pipeline);
     }
 

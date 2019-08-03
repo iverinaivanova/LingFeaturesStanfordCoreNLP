@@ -43,7 +43,7 @@ public class embeddedVBNInNPs {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_Ks/test").listFiles();
+        File[] files = new File("/all_Ks").listFiles();
         analyzeFiles(files, pipeline);
     }
 

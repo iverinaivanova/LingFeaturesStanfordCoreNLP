@@ -43,13 +43,13 @@ public class embeddedClausesInNPs {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("/all_Ks").listFiles();
+        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_xml").listFiles();
         analyzeFiles(files, pipeline);
     }
 
     public static void analyzeFiles(File[] files, StanfordCoreNLP pipeline) throws ParserConfigurationException, SAXException, IOException {
-      /* ABSTRACT
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      // ABSTRACT
+      /*  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         for (File file : files) {
             Document doc = builder.parse(file);
@@ -80,7 +80,7 @@ public class embeddedClausesInNPs {
            
             CoreDocument document = new CoreDocument(small);
 
-            pipeline.annotate(document);*/
+            pipeline.annotate(document); */
       // BODY SECTION
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();        
@@ -133,7 +133,7 @@ public class embeddedClausesInNPs {
             String bodyTexContentCleaned = bodyTextAggregated.toString().trim();
             //System.out.println("body text cleaned: " + bodyTexContentCleaned);
             CoreDocument document = new CoreDocument(bodyTexContentCleaned);
-            pipeline.annotate(document);
+            pipeline.annotate(document); 
             
              List<Tree> myNPs = new ArrayList<Tree>(); 
              List<Tree> embeddedCl = new ArrayList<Tree>(); 

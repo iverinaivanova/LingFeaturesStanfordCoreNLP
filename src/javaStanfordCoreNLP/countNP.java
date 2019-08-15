@@ -44,13 +44,14 @@ public class countNP {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("/all_Ks").listFiles();
+        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_xml").listFiles();
         analyzeFiles(files, pipeline);
     }
 
     public static void analyzeFiles(File[] files, StanfordCoreNLP pipeline) throws ParserConfigurationException, SAXException, IOException {
-        /* ABSTRACT
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        // ABSTRACT
+       
+       /* DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         for (File file : files) {
             Document doc = builder.parse(file);
@@ -122,7 +123,7 @@ public class countNP {
             }
             String bodyTexContentCleaned = bodyTextAggregated.toString().trim();
             //System.out.println("body text cleaned: " + bodyTexContentCleaned);
-            CoreDocument document = new CoreDocument(bodyTexContentCleaned);
+            CoreDocument document = new CoreDocument(bodyTexContentCleaned); 
             pipeline.annotate(document);
             List<Tree> myNPs = new ArrayList<Tree>();
             List<CoreSentence> sentencesOfDoc;
@@ -149,7 +150,7 @@ public class countNP {
 
             }
                 int countNPs = myNPs.size(); 
-                System.out.println(countNPs);
+                //System.out.println(countNPs);
                 System.out.println("Analysing file: " + file.getName());
                 
                 double meanNP = (double) countNPs/sentenceNum;

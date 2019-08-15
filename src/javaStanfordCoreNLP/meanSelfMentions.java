@@ -43,25 +43,47 @@ public class meanSelfMentions {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("/all_Ks").listFiles();
+        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_xml").listFiles();
         analyzeFiles(files, pipeline);
     }
 
     public static void analyzeFiles(File[] files, StanfordCoreNLP pipeline) throws ParserConfigurationException, SAXException, IOException {
-      /*  ABSTRACT
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      //  ABSTRACT
+     /*   DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         for (File file : files) {
             Document doc = builder.parse(file);
             NodeList abstractList;
             Element abstractEl = (Element) doc.getElementsByTagName("bodyText").item(0);
-            String abstracttext = abstractEl.getTextContent(); //.replaceAll("[^a-zA-Z ]", " ");*/
+            String abstracttext = abstractEl.getTextContent(); //.replaceAll("[^a-zA-Z ]", " ");
             //System.out.println("My abstract text:\n " + abstracttext);
             // annnotate the document
             // create a document object
            // abstracttext = abstracttext.replaceAll("\n", "");
+            
+           StringBuilder sb = new StringBuilder();
+           String[] lines = abstracttext.split("\n");
+           for(String l : lines) {
+               //System.out.println("aLine: " + l);
+               if(l.endsWith("-")) {
+                   sb.append(l.substring(0, l.length()-1));
+               }
+               else {
+                   sb.append(l+ " ");
+               }
+           }
+           abstracttext = sb.toString();
+           
+           //System.out.println(abstracttext);
+           String small = abstracttext.toLowerCase();
+           //System.out.println("Lower Case Text: " + small);
+           
+            CoreDocument document = new CoreDocument(small); 
+            pipeline.annotate(document);
+      */
            
            // BODY SECTION
+           
            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
            DocumentBuilder builder = factory.newDocumentBuilder();        
             for (File file : files) {
@@ -108,7 +130,7 @@ public class meanSelfMentions {
                         bodyTextAggregated.append(bodyTextContent + " ");
                     }
             }
-            String bodyTexContentCleaned = bodyTextAggregated.toString().trim();
+            String bodyTexContentCleaned = bodyTextAggregated.toString().trim(); 
             //System.out.println("body text cleaned: " + bodyTexContentCleaned);
             CoreDocument document = new CoreDocument(bodyTexContentCleaned);
             pipeline.annotate(document);  
@@ -168,7 +190,7 @@ public class meanSelfMentions {
             int selfMentNum = selfMent.size();
            // double noPronouns = countNPs - selfMentNum;
             double meanSelfMentNum = (double) selfMentNum/countNPs;
-             meanSelfMentNum = Math.round(meanSelfMentNum*100.0)/100.0;  
+            meanSelfMentNum = Math.round(meanSelfMentNum*100.0)/100.0;  
             System.out.println("Analysing file:" + file.getName());
             // Printing the mean number of self mentions per document
             System.out.println(meanSelfMentNum);

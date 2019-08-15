@@ -43,13 +43,13 @@ public class embeddedPPsInNPs {
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        File[] files = new File("/all_Ks").listFiles();
+        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/java_xml_reader/all_xml").listFiles();
         analyzeFiles(files, pipeline);
     }
 
     public static void analyzeFiles(File[] files, StanfordCoreNLP pipeline) throws ParserConfigurationException, SAXException, IOException {
-       /* ABSTRACT
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+       // ABSTRACT
+      /*  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         for (File file : files) {
             Document doc = builder.parse(file);
@@ -82,6 +82,7 @@ public class embeddedPPsInNPs {
 
             pipeline.annotate(document); */
        // BODY SECTION
+       
        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();        
         for (File file : files) {

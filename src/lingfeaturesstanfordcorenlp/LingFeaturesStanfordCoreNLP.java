@@ -1,4 +1,4 @@
-package allfeaturesbody;
+package lingfeaturesstanfordcorenlp;
 
 import edu.stanford.nlp.coref.data.CorefChain;
 import edu.stanford.nlp.ling.CoreLabel;
@@ -39,7 +39,7 @@ public class AllFeaturesBody {
         props.setProperty("coref.algorithm", "neural");
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-        File[] files = new File("C:/Users/Administrator/Documents/NetBeansProjects/LinguisticFeaturesStanfordCoreNLP/xmls").listFiles();
+        File[] files = new File("../LinguisticFeaturesStanfordCoreNLP/all_Ks").listFiles();
         Arrays.sort(files);
         analyzeFiles(files, pipeline);
     }
@@ -49,8 +49,32 @@ public class AllFeaturesBody {
         DocumentBuilder builder = factory.newDocumentBuilder();
         for (File file : files) {
             Document doc = builder.parse(file);
-            // BODY PART. Extracting and formatting the body part
-            ArrayList<String> bodyTextFractions = new ArrayList<>();
+            // ABSTRACT Extracting and formatting the abstract
+             Element abstractEl = (Element) doc.getElementsByTagName("bodyText").item(0);
+            String abstracttext = abstractEl.getTextContent(); //.replaceAll("[^a-zA-Z ]", " "); 
+            StringBuilder sb = new StringBuilder();
+            String[] lines = abstracttext.split("\n");
+            for(String l : lines) {
+                if(l.endsWith("-")) {
+                    sb.append(l.substring(0, l.length()-1));
+               }
+               else {
+                   sb.append(l+ " ");
+               }
+           }
+           abstracttext = sb.toString();
+           
+           //System.out.println(abstracttext);
+           String small = abstracttext.toLowerCase();
+           //System.out.println("Lower Case Text: " + small);
+           
+            CoreDocument document = new CoreDocument(small);
+
+            pipeline.annotate(document);
+            
+            // FULL TEXT. Extracting and formatting the full text
+            
+          /*  ArrayList<String> bodyTextFractions = new ArrayList<>();
             ArrayList<String> abstractTextFractions = new ArrayList<>();
             NodeList bodyTextElements = doc.getElementsByTagName("bodyText");
             for (int n = 1; n < bodyTextElements.getLength(); n++) {
@@ -92,7 +116,7 @@ public class AllFeaturesBody {
             String bodyTexContentCleaned = bodyTextAggregated.toString().trim();
             //System.out.println("body text cleaned: " + bodyTexContentCleaned);
             CoreDocument document = new CoreDocument(bodyTexContentCleaned);
-            pipeline.annotate(document);
+            pipeline.annotate(document); */
 
             ArrayList<String> wordsInText = new ArrayList<>();
             ArrayList<String> nonWords = new ArrayList<>();
@@ -113,29 +137,39 @@ public class AllFeaturesBody {
                     nonWords.add(aWord);
 
                 }
-            }
+            } 
+            // Printing file name
+            System.out.println("Analysing file:" + file.getName());
+            
             // Total number of tokens
             int wordsCount = wordsInText.size();
-            // Getting the corefchains in the document
+            
+            // Getting the coreference chains per document
             Map<Integer, CorefChain> corefChains = document.corefChains();
             // Total number of corefchains
             int corefCount = corefChains.size();
             double corefChainsAvg = (double) corefCount / sentCount;
             corefChainsAvg = Math.round(corefChainsAvg * 100.0) / 100.0;
-            System.out.println("Analysing file:" + file.getName());
+            // Printing the mean number of coreference chains
             System.out.println("The mean number of corefchains per number of sentences: ");
             System.out.println(corefChainsAvg);
+            
             System.out.println("Number of sentences: ");
             System.out.println(sentCount);
-            double sentCompl = (double) wordsCount / sentCount;
-            sentCompl = Math.round(sentCompl * 100.0) / 100.0;
-            System.out.println("Sentence complexity:");
-            System.out.println(sentCompl);
+            
+            double sentLength = (double) wordsCount / sentCount;
+            sentLength = Math.round(sentCompl * 100.0) / 100.0;
+            System.out.println("Sentence length:");
+            System.out.println(sentLength);
+            
+            // Create empty lists to which we will append the following constituents: NPs, embedded finite and non-finite clauses.
             List<Tree> myNPs = new ArrayList<Tree>();
             List<Tree> embeddedCl = new ArrayList<Tree>();
             List<Tree> embeddedVBN = new ArrayList<Tree>();
             List<Tree> embeddedTO = new ArrayList<Tree>();
             ArrayList<String> selfMent = new ArrayList<>();
+            
+            // Iterate over each token and 
             for (int i = 0; i < tokensOfDoc; i++) {
                 CoreLabel token = document.tokens().get(i);
                 String selfMentTokens = token.word();
@@ -167,7 +201,7 @@ public class AllFeaturesBody {
                     }
                 }
             }
-            //Iterating over the sentences and getting the total number of sentences
+            //Iterate over the sentences and get the total number of sentences
             sentencesOfDoc = document.sentences();
             for (int i = 0; i < sentCount; i++) {
                 CoreSentence sentence = document.sentences().get(i);
@@ -178,11 +212,15 @@ public class AllFeaturesBody {
                     // If there is such a constituent, store it into the respective array.
                     if (subtree.label().value().equals("NP")) {
                         myNPs.add(subtree);
+                        // Iterate over each NP structure and if the subtree label equals any of the labels below, append them to the respective array.
                         for (Tree s : subtree) {
+                            // Look for embedded finite clauses
                             if (s.label().value().equals("SBAR")) {
                                 embeddedCl.add(s);
+                            //  Look for embedded past participle clauses 
                             } else if (s.label().value().equals("VBN")) {
                                 embeddedVBN.add(s);
+                            // Look for embedded TO-INF clauses
                             } else if (s.label().value().equals("TO")) {
                                 embeddedTO.add(s);
                             }
@@ -195,12 +233,16 @@ public class AllFeaturesBody {
             }
             // Total number of NPs
             int countNPs = myNPs.size();
+            
             // Total number of self-mentions
             int selfMentNum = selfMent.size();
             double meanSelfMentNum = (double) selfMentNum / countNPs;
             meanSelfMentNum = Math.round(meanSelfMentNum * 100.0) / 100.0;
+            //Printing the mean number of self-mention
             System.out.println("Mean number of self mentions per document:");
             System.out.println(meanSelfMentNum);
+            
+            // Iterate over each token and get the words.
             for (int i = 0; i < tokensOfDoc; i++) {
                 CoreLabel token = document.tokens().get(i);
                 String aWord = token.word();
@@ -212,47 +254,50 @@ public class AllFeaturesBody {
 
                 }
             }
-            ArrayList<String> modalAuxVerbs = new ArrayList<>();
+           
+            //Iterate over each sentence and for each sentence get the POS of the tokens
             for (int i = 0; i < sentCount; i++) {
                 CoreSentence sentence = document.sentences().get(i);
                 List<String> posTags = sentence.posTags();
+                // Total number of POS tags
                 int posTagsNum = posTags.size();
+                // Iterate over each POS tag value and look for pronouns "PRP". If there are pronouns, append them to the "myPronouns" array.
                 for (int n = 0; n < posTagsNum; n++) {
                     String posText = posTags.get(n);
-                    if (posText.startsWith("MD")) {
-                        modalAuxVerbs.add(posText);
-                    } else if (posText.startsWith("PRP")) {
+                    if (posText.startsWith("PRP")) {
                         myPronouns.add(posText);
                     }
                 }
             }
-            //Total number of modal auxiliaries
-            int modalAuxNum = modalAuxVerbs.size();
-            double meanModalAuxNum = (double) modalAuxNum / wordsCount;
-            meanModalAuxNum = Math.round(meanModalAuxNum * 100.0) / 100.0;
-            //Printing the mean number of modal auxiliary verbs per number of sentences
-            System.out.println("Mean number of modal auxiliaries normalized by number of tokens: ");
-            System.out.println(meanModalAuxNum);
+            
             double meanNP = (double) countNPs / wordsCount;
             meanNP = Math.round(meanNP * 100.0) / 100.0;
             //Printing out the mean number of NP occurrences per number of sentences
             System.out.println("The number of NPs per document normalized by number of tokens: ");
             System.out.println(meanNP);
-            int countCl = embeddedCl.size();
+            
             //Total number of pronouns
             int myPronounsNum = myPronouns.size();
+            
+            // Total number of NPs excluding the pronouns
             int withoutPronouns = countNPs - myPronounsNum;
+            
+            // Total number of finite clauses
             int embeddedClNum = embeddedCl.size();
             double meanClModifiers = (double) embeddedClNum / withoutPronouns;
             meanClModifiers = Math.round(meanClModifiers * 100.0) / 100.0;
             System.out.println("Mean Clause Modifiers:");
             System.out.println(meanClModifiers);
+            
+            // Total number of embedded past participle clauses
             int embeddedVBNNum = embeddedVBN.size();
             double meanVBNModifiers = (double) embeddedVBNNum / withoutPronouns;
             meanVBNModifiers = Math.round(meanVBNModifiers * 100.0) / 100.0;
             //Printing the mean number of past participle modifiers of noun heads 
             System.out.println("Mean non-finite clauses introduced by past participle:");
             System.out.println(meanVBNModifiers);
+            
+            // Total number of embedded TO-inf clauses
             int embeddedTONum = embeddedTO.size();
             double meanTOModifiers = (double) embeddedTONum / withoutPronouns;
             meanTOModifiers = Math.round(meanTOModifiers * 100.0) / 100.0;

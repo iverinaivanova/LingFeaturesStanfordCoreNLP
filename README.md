@@ -1,7 +1,7 @@
-# MyCoreNLPDemo
+## LingFeaturesStanfordCoreNLP
 
 ### Overview of the project
-MyCoreNLPDemo contains java scripts (**src** folder) that parse multiple articles in Compulational Linguistics in xml form (the files can be accessed from the **all_Ks** folder. Source: ACL Anthology Reference Corpus), and use Stanford CoreNLP annotators to output coreference analysis per document and sentiment analysis per sentence, as well as text length, sentence count, number of self mentions (1st plural personal pronouns), average number of positive/negative/neutral sentences. The **scr** folder will be dynamically and regularly expanded with new scripts. 
+LingFeaturesStanfordCoreNLP contain a java scripts (**src** folder) that parses multiple articles in Compulational Linguistics in xml form (the files can be accessed from the **all_Ks** folder. Source: ACL Anthology Reference Corpus), and uses the Stanford CoreNLP Module to output coreference analysis per document (mean number of coreference chains), as well as text length, sentence count, number of self mentions, 
 
 ### How to run the scripts and what the scripts do
 **1. Things to consider before you run the scripts:**

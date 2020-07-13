@@ -9,7 +9,7 @@ LingFeaturesStanfordCoreNLP contains a java scripts (**src** folder) that parses
 
 ### How to run the script
 **Things to consider before you run the scripts:**
-- When you open the MycoreNLPDemo project in your editor, make sure that the subbranch called **Libraries** in not empty (i.e. it contains Stanford CoreNLP libraries that the scripts require to run the CoreNLP annotators).If the Libraries directory is empty, do the following:
+- When you open the LingFeaturesStanfordCoreNLP project in your editor, make sure that the subbranch called **Libraries** in not empty (i.e. it contains Stanford CoreNLP libraries that the scripts require to run the CoreNLP annotators).If the Libraries directory is empty, do the following:
 - Download Stanford CoreNLP https://stanfordnlp.github.io/CoreNLP/download.html and unarchive it.
 - Then go back to the **Libraries** subbranch, select it, and right click on it. Then select **Add JAR/Folder**, search for the corenlp package that you've already unarchived and load all libraries from the folder.
 

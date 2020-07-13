@@ -1,0 +1,1 @@
+The excel file "features.xlsx" contains all the features and their computed values per text type. 

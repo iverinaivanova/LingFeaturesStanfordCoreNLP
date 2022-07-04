@@ -1,10 +1,24 @@
 ## LingFeaturesStanfordCoreNLP
 
 ### Overview of the project
-The aim of the project is to extract automatically a predefined set of linguistic features from multiple research articles using the StanfordCoreNLP Module. 
-The source code parses multiple articles in the field of Computational Linguistics (CL) in xml format. The folder **all_Ks** folder contains example 
-LingFeaturesStanfordCoreNLP contains a java script (**src** folder), that parses multiple articles in Compulational Linguistics in xml format (the **all_Ks** folder contains  Source: [ACL Anthology Reference Corpus](https://acl-arc.comp.nus.edu.sg/)), 
-The 
+The aim of the project is to identify distinctive linguistic features for two text types -- abstracts and full texts -- appearing in the same corpus of a reseach article. To achieve this, we automatically extracted a predefined set of linguistic features from multiple research articles using the StanfordCoreNLP Module. 
+
+## Linguistic Features
+- coreference (measured by frequency of coreference chains)
+- noun density
+- noun phrase (NP) count
+- self-mentions
+- NP complexity (measured by frequency of embedded clauses in the internal structure of an NP)
+ - embedded that-clause
+ - embedded to-infinitival clause
+ - embedded past-participial clause
+- sentence length (used for normalization purposes)
+ 
+
+
+### Source Code
+The source code is available in the **scr** folder. It parses multiple articles in the field of Computational Linguistics (CL) available in xml format from the [ACL Anthology Reference Corpus](https://acl-arc.comp.nus.edu.sg/)). The **all_Ks** folder contains example articles to illustrate the structure of the parsed articles.
+
 and uses [the Stanford CoreNLP Module](https://stanfordnlp.github.io/CoreNLP/index.html) to output:
 - coreference analysis per document (measured in mean number of coreference chains),
 - mean number of tokens

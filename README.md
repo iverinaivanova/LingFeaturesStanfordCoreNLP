@@ -23,7 +23,7 @@ The aim of the project is to identify distinctive linguistic features for two te
 
 ### How to run the script
 **Things to consider before you run the scripts:**
-- When you open the LingFeaturesStanfordCoreNLP project in your IDE, make sure that the subbranch called **Libraries** is not empty (i.e. it contains StanfordCoreNLP libraries that the scripts require to run the CoreNLP annotators). If the Libraries directory is empty, do the following:
+- When you open the LingFeaturesStanfordCoreNLP project in your IDE, make sure that the subbranch called **Libraries** is not empty (i.e. it should contain StanfordCoreNLP libraries that the scripts require to run the CoreNLP annotators). If the Libraries directory is empty, do the following:
 1. Download Stanford CoreNLP https://stanfordnlp.github.io/CoreNLP/download.html and unarchive it.
 2. Go back to the **Libraries** subbranch in your IDE, select it, and right click on it. 
 3. Select **Add JAR/Folder**, search for the corenlp package that you've already unarchived and load all libraries from the folder.

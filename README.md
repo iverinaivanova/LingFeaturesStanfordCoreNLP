@@ -15,23 +15,16 @@ The aim of the project is to identify distinctive linguistic features for two te
 - sentence length (used for normalization purposes)
  
 
-
-### Source Code
-The source code is available in the **scr** folder. It parses multiple articles in the field of Computational Linguistics (CL) available in xml format from the [ACL Anthology Reference Corpus](https://acl-arc.comp.nus.edu.sg/)). The **all_Ks** folder contains example articles to illustrate the structure of the parsed articles.
-
-and uses [the Stanford CoreNLP Module](https://stanfordnlp.github.io/CoreNLP/index.html) to output:
-- coreference analysis per document (measured in mean number of coreference chains),
-- mean number of tokens
-- mean sentence length
-- mean number of self mentions, mean number of NPs, mean number of finite and non-finite clauses embedded in the NP structure.
-
-- Note that the **all_Ks** does not contain the whole corpus.
-
+### Source Code + Annotations
+- The java-based script (**scr** folder) parses multiple research articles in the field of Computational Linguistics (CL) available in xml format from the [ACL Anthology Reference Corpus](https://acl-arc.comp.nus.edu.sg/). 
+- Example articles from the corpus that illustrate the structure of the xmls are available in the **all_Ks** folder.
+- The script outputs the computed mean values of the linguistic features per text type.
 - The data set with the features and their computed values per text type are available under the **annotations** folder.
 
 ### How to run the script
 **Things to consider before you run the scripts:**
-- When you open the LingFeaturesStanfordCoreNLP project in your editor, make sure that the subbranch called **Libraries** in not empty (i.e. it contains Stanford CoreNLP libraries that the scripts require to run the CoreNLP annotators).If the Libraries directory is empty, do the following:
-- Download Stanford CoreNLP https://stanfordnlp.github.io/CoreNLP/download.html and unarchive it.
-- Then go back to the **Libraries** subbranch, select it, and right click on it. Then select **Add JAR/Folder**, search for the corenlp package that you've already unarchived and load all libraries from the folder.
+- When you open the LingFeaturesStanfordCoreNLP project in your IDE, make sure that the subbranch called **Libraries** is not empty (i.e. it contains StanfordCoreNLP libraries that the scripts require to run the CoreNLP annotators). If the Libraries directory is empty, do the following:
+  1. Download Stanford CoreNLP https://stanfordnlp.github.io/CoreNLP/download.html and unarchive it.
+  2. Go back to the **Libraries** subbranch in your IDE, select it, and right click on it. 
+  3. Select **Add JAR/Folder**, search for the corenlp package that you've already unarchived and load all libraries from the folder.
 

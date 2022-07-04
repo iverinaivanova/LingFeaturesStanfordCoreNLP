@@ -9,9 +9,9 @@ The aim of the project is to identify distinctive linguistic features for two te
 - noun phrase (NP) count
 - self-mentions
 - NP complexity (measured by frequency of embedded clauses in the internal structure of an NP)
- - embedded that-clause
- - embedded to-infinitival clause
- - embedded past-participial clause
+  - embedded that-clause
+  - embedded to-infinitival clause
+  - embedded past-participial clause
 - sentence length (used for normalization purposes)
  
 

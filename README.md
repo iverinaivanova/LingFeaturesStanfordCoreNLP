@@ -1,7 +1,15 @@
 ## LingFeaturesStanfordCoreNLP
 
 ### Overview of the project
-LingFeaturesStanfordCoreNLP contains a java script (**src** folder) that parses multiple articles in Compulational Linguistics in xml form (the files can be accessed from the **all_Ks** folder. Source: [ACL Anthology Reference Corpus](https://acl-arc.comp.nus.edu.sg/)), and uses [the Stanford CoreNLP Module](https://stanfordnlp.github.io/CoreNLP/index.html) to output coreference analysis per document (mean number of coreference chains), as well as mean number of tokens, mean sentence length, mean number of self mentions, mean number of NPs, mean number of finite and non-finite clauses embedded in the NP structure.
+The aim of the project is to extract automatically a predefined set of linguistic features from multiple research articles using the StanfordCoreNLP Module. 
+The source code parses multiple articles in the field of Computational Linguistics (CL) in xml format. The folder **all_Ks** folder contains example 
+LingFeaturesStanfordCoreNLP contains a java script (**src** folder), that parses multiple articles in Compulational Linguistics in xml format (the **all_Ks** folder contains  Source: [ACL Anthology Reference Corpus](https://acl-arc.comp.nus.edu.sg/)), 
+The 
+and uses [the Stanford CoreNLP Module](https://stanfordnlp.github.io/CoreNLP/index.html) to output:
+- coreference analysis per document (measured in mean number of coreference chains),
+- mean number of tokens
+- mean sentence length
+- mean number of self mentions, mean number of NPs, mean number of finite and non-finite clauses embedded in the NP structure.
 
 - Note that the **all_Ks** does not contain the whole corpus.
 

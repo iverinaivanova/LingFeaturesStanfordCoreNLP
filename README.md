@@ -17,7 +17,6 @@ The aim of the project is to identify distinctive linguistic features for two te
 
 ### Source Code + Data set
 - The java-based script (**scr** folder) parses multiple research articles in the field of Computational Linguistics (CL) available in xml format from the **ACL Anthology Reference Corpus**: https://www.aclweb.org/anthology/ (Originally downloaded from the repo from: https://acl-arc.comp.nus.edu.sg/).
-- Example articles from the corpus that illustrate the structure of the xmls are available in the **all_Ks** folder. 
 - The script outputs the computed mean values of the linguistic features per text type.
 - The data set with the features and their computed values per text type are available under the **annotations** folder.
 

@@ -39,6 +39,7 @@ public class AllFeaturesBody {
         props.setProperty("coref.algorithm", "neural");
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+        // Add the path to the xml files you want to process. The path is set to the example xml files 
         File[] files = new File("../LinguisticFeaturesStanfordCoreNLP/xmls").listFiles();
         Arrays.sort(files);
         analyzeFiles(files, pipeline);

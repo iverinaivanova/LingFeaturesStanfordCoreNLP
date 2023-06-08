@@ -39,7 +39,7 @@ public class AllFeaturesBody {
         props.setProperty("coref.algorithm", "neural");
         // build pipeline
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-        File[] files = new File("../LinguisticFeaturesStanfordCoreNLP/all_Ks").listFiles();
+        File[] files = new File("../LinguisticFeaturesStanfordCoreNLP/xmls").listFiles();
         Arrays.sort(files);
         analyzeFiles(files, pipeline);
     }
